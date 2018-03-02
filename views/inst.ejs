@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <% include header %>
+<link rel="stylesheet" href="stylesheets/inst.css" />
 <script type="text/javascript">
     function seti_id(i_id){
         $.get(`./inst/pieces?i_id=${i_id}`, (res) => {
-            //$('div#inst_list').text('');
+            $('#piece_list').addClass('piece_show');
             
             res.sort((a,b) => {
                 if(a.p_id < b.p_id) return -1;
@@ -18,6 +19,7 @@
     }
     
     function askNum(p_id, i_id){
+        $('#num').addClass('num_show');
         $.get(`./inst/num?i_id=${i_id}&p_id=${p_id}`, (res) => {
             res.forEach((val) => {
                 $('div#num').append(`<div onClick="enqueue(${i_id}, ${p_id}, ${val.i_num})">${val.i_num}</div>`);
@@ -26,6 +28,10 @@
     }
     
     function enqueue(i_id, p_id, num){
+        $('div#piece_list').removeClass('piece_show');
+        $('div#piece_list').text('');
+        $('div#num').removeClass('num_show');
+        $('div#num').text('');
         $('div#queue').append(`<div i_id=${i_id} p_id=${p_id} num=${num}>${i_id} ${p_id} ${num}</div>`);
     }
     
@@ -38,6 +44,7 @@
                 console.log(res);
             });
         });
+        $('div#queue').text('');
     }
 </script>
 <div id="queue_box">
