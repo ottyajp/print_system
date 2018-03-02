@@ -30,8 +30,8 @@
 
 #num_container {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 15px;
+    left: 15px;
     border: 1px solid black;
     opacity: 0;
 }
