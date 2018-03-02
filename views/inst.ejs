@@ -2,9 +2,11 @@
 <% include header %>
 <link rel="stylesheet" href="stylesheets/inst.css" />
 <script type="text/javascript">
-    function seti_id(i_id){
+    function seti_id(i_id, i_name){
+        $('div#piece_list').append(`<div class="i_name">${i_name}</div>`);
         $.get(`./inst/pieces?i_id=${i_id}`, (res) => {
-            $('#piece_list').addClass('piece_show');
+            $('#piece_back').addClass('piece_show');
+            $('#piece_container').addClass('piece_show');
             
             res.sort((a,b) => {
                 if(a.p_id < b.p_id) return -1;
@@ -13,24 +15,36 @@
             });
             res.forEach((val) => {
                 console.log(val);
-                $('div#piece_list').append(`<div onClick="askNum(${val.p_id},${i_id})">${val.title}</div>`);
+                $('div#piece_list').append(`<div class="general_list" onClick="askNum(${val.p_id},${i_id}, '${val.title}')">${val.title}</div>`);
             });
         })
     }
+    function piece_back(){
+        $('#piece_container').removeClass('piece_show');
+        $('#piece_back').removeClass('piece_show');
+        $('#piece_list').text('');
+    }
     
-    function askNum(p_id, i_id){
-        $('#num').addClass('num_show');
+    function askNum(p_id, i_id, title){
+        $('div#num').append(`<div class="p_title">${title}</div>`);
+        $('#num_container').addClass('num_show');
+        $('#num_back').addClass('num_show');
         $.get(`./inst/num?i_id=${i_id}&p_id=${p_id}`, (res) => {
             res.forEach((val) => {
-                $('div#num').append(`<div onClick="enqueue(${i_id}, ${p_id}, ${val.i_num})">${val.i_num}</div>`);
+                $('div#num').append(`<div class="general_list" onClick="enqueue(${i_id}, ${p_id}, ${val.i_num})">${val.i_num}</div>`);
             })
         })
     }
+    function num_back(){
+        $('#num_container').removeClass('num_show');
+        $('#num_back').removeClass('num_show');
+        $('#num').text('');
+    }
     
     function enqueue(i_id, p_id, num){
-        $('div#piece_list').removeClass('piece_show');
+        $('div#piece_container').removeClass('piece_show');
         $('div#piece_list').text('');
-        $('div#num').removeClass('num_show');
+        $('div#num_container').removeClass('num_show');
         $('div#num').text('');
         $('div#queue').append(`<div i_id=${i_id} p_id=${p_id} num=${num}>${i_id} ${p_id} ${num}</div>`);
     }
@@ -53,9 +67,15 @@
 </div>
 <div id="inst_list">
     <% instruments.forEach((inst) => { %>
-        <div class="button" onClick="seti_id(<%= inst.i_id %>)"><%= inst.i_name %></div>
+        <div class="button" onClick="seti_id(<%= inst.i_id %>, '<%= inst.i_name %>')"><%= inst.i_name %></div>
     <% }); %>
 </div>
-<div id="piece_list"></div>
-<div id="num"></div>
+<div id="piece_container">
+    <div id="piece_list"></div>
+    <div id="piece_back" onClick="piece_back()">もどる</div>
+</div>
+<div id="num_container">
+    <div id="num"></div>
+    <div id="num_back" onClick="num_back()">もどる</div>
+</div>
 <% include footer %>

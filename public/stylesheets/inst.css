@@ -1,3 +1,9 @@
+.general_list {
+    border: 1px solid black;
+    padding: 2px;
+    margin: 5px;
+}
+
 #queue_box {
     border: 1px solid black;
     position: absolute;
@@ -9,26 +15,42 @@
     position: absolute;
 }
 
-#piece_list {
+#piece_container {
     position: absolute;
     border: 1px solid black;
     opacity: 0;
 }
+#piece_back {
+    background-color: aliceblue;
+    opacity: 0;
+}
 
-#num {
+#num_container {
     position: absolute;
     border: 1px solid black;
+    opacity: 0;
+}
+#num_back {
+    background-color: aliceblue;
     opacity: 0;
 }
 
 .piece_show {
     opacity: 1 !important;
-    background-color: lightpink;
+    background-color: white;
     z-index: 10;
+}
+
+.i_name {
+    background-color: lightpink;
+}
+
+.p_title {
+    background-color: skyblue;
 }
 
 .num_show {
     opacity: 1 !important;
-    background-color: lightskyblue;
+    background-color: white;
     z-index: 15;
 }
