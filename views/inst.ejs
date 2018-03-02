@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<% include header %>
+<script type="text/javascript">
+    function seti_id(i_id){
+        $.get(`./inst/pieces?i_id=${i_id}`, (res) => {
+            //$('div#inst_list').text('');
+            
+            res.sort((a,b) => {
+                if(a.p_id < b.p_id) return -1;
+                if(a.p_id > b.p_id) return 1;
+                return 0;
+            });
+            res.forEach((val) => {
+                console.log(val);
+                $('div#piece_list').append(`<div onClick="askNum(${val.p_id},${i_id})">${val.title}</div>`);
+            });
+        })
+    }
+    
+    function askNum(p_id, i_id){
+        $.get(`./inst/num?i_id=${i_id}&p_id=${p_id}`, (res) => {
+            res.forEach((val) => {
+                $('div#num').append(`<div onClick="enqueue(${i_id}, ${p_id}, ${val.i_num})">${val.i_num}</div>`);
+            })
+        })
+    }
+    
+    function enqueue(i_id, p_id, num){
+        $('div#queue').append(`<div i_id=${i_id} p_id=${p_id} num=${num}>${i_id} ${p_id} ${num}</div>`);
+    }
+    
+    function do_print(){
+        $('div#queue').find('div').each((index, val) => {
+            const i_id = $(val).attr('i_id');
+            const p_id = $(val).attr('p_id');
+            const num = $(val).attr('num');
+            $.get(`./print?i_id=${i_id}&p_id=${p_id}&num=${num}`, (res) => {
+                console.log(res);
+            });
+        });
+    }
+</script>
+<div id="queue_box">
+    <div id="queue"></div>
+    <div id="print_button" onClick="do_print()">print out!</div>
+</div>
+<div id="inst_list">
+    <% instruments.forEach((inst) => { %>
+        <div class="button" onClick="seti_id(<%= inst.i_id %>)"><%= inst.i_name %></div>
+    <% }); %>
+</div>
+<div id="piece_list"></div>
+<div id="num"></div>
+<% include footer %>
