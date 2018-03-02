@@ -16,7 +16,7 @@
         for(var i = 0; i < length; i++) {
             const entry = e.dataTransfer.items[i].getAsFile();
             const eleid = entry.name.split('.')[0];
-            const element = $(`<div id="p${eleid}" style="margin:5px;"><select id="${eleid}"></select>${entry.name}</div>`);
+            const element = $(`<div id="p${eleid}" class="record" style="margin:5px;"><select id="${eleid}"></select><span class="filename">${entry.name}</span></div>`);
             $('div#datas').append(element);
             element.ready(() => {
                 instruments.forEach((inst) => {
@@ -26,6 +26,31 @@
             });
         }
     }
+    function add(){
+        const p_id = $('#pieces').val();
+        const prefix = $('#prefix').val();
+        const records = $.find('.record');
+        records.forEach((record) => {
+            const i_idsel = $(record).find('select')[0];
+            const i_id = $(i_idsel).val();
+            const i_numsel = $(record).find('input')[0];
+            const i_num = $(i_numsel).val();
+            const namesel = $(record).find('span')[0];
+            const name = $(namesel).text();
+            const path = `${prefix}${name}`;
+            console.log(p_id, i_id, i_num, path);
+            $.post('./add_sheet', {
+                'p_id':p_id,
+                'i_id':i_id,
+                'i_num':i_num,
+                'path':path
+            }, (res) => {
+                if(res === 'ok'){
+                    return true;
+                }
+            });
+        });
+    }
 </script>
 <div id="droppable" droppable="true" ondrop="drop(event)" ondragenter="return false" ondragover="return false" style="border:gray solid 1em; padding: 2em;">drop here.</div>
 <HR />
@@ -34,5 +59,5 @@
 </div>
 prefix:<input type="text" id="prefix">
 <div id="datas"></div>
-<div>追加</div>
+<div onClick="add()">追加</div>
 <% include footer %>
