@@ -63,3 +63,9 @@
 #print_button {
     background-color: pink;
 }
+
+#back {
+    position: fixed;
+    bottom: 1px;
+    left: 5px;
+}
