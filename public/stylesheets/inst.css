@@ -6,8 +6,9 @@
 
 #queue_box {
     border: 1px solid black;
-    position: absolute;
+    position: fixed;
     bottom: -2px;
+    right: 2px;
     padding: 3px;
 }
 
@@ -17,6 +18,8 @@
 
 #piece_container {
     position: absolute;
+    top: 10px;
+    left: 10px;
     border: 1px solid black;
     opacity: 0;
 }
@@ -27,6 +30,8 @@
 
 #num_container {
     position: absolute;
+    top: 10px;
+    left: 10px;
     border: 1px solid black;
     opacity: 0;
 }
@@ -53,4 +58,8 @@
     opacity: 1 !important;
     background-color: white;
     z-index: 15;
+}
+
+#print_button {
+    background-color: pink;
 }

@@ -63,11 +63,11 @@
 </script>
 <div id="queue_box">
     <div id="queue"></div>
-    <div id="print_button" onClick="do_print()">print out!</div>
+    <div id="print_button" onClick="do_print()">印刷する</div>
 </div>
 <div id="inst_list">
     <% instruments.forEach((inst) => { %>
-        <div class="button" onClick="seti_id(<%= inst.i_id %>, '<%= inst.i_name %>')"><%= inst.i_name %></div>
+        <div class="general_list" onClick="seti_id(<%= inst.i_id %>, '<%= inst.i_name %>')"><%= inst.i_name %></div>
     <% }); %>
 </div>
 <div id="piece_container">
