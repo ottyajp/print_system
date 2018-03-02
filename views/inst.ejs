@@ -50,6 +50,9 @@
         $('div#num').text('');
         $('div#queue').append(`<div i_id=${i_id} p_id=${p_id} num=${num}>${title} ${name} ${num}</div>`);
     }
+    function clear_queue(){
+        $('div#queue').text('');
+    }
     
     function do_print(){
         $('div#queue').find('div').each((index, val) => {
@@ -64,6 +67,7 @@
     }
 </script>
 <div id="queue_box">
+    <div id="clear_queue" onClick="clear_queue()">クリアする</div>
     <div id="queue"></div>
     <div id="print_button" onClick="do_print()">印刷する</div>
 </div>
