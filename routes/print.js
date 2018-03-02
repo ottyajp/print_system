@@ -9,7 +9,7 @@ const router = express.Router();
 const pathprefix = '/path/to/pdf/';
 
 router.get('/', (req, res) => {
-    const query = `SELECT path FROM sheets WHERE p_id=${req.query.p_id} AND i_id=${req.query.i_id} AND i_num=${req.query.num}`;
+    const query = `SELECT path FROM sheets WHERE p_id=${req.query.p_id} AND i_id=${req.query.i_id} AND i_num='${req.query.num}'`;
     console.log(query);
     connection.query(query, (err, rows) => {
         const path = `${pathprefix}${rows[0].path}`;

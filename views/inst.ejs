@@ -31,7 +31,7 @@
         $('#num_back').addClass('num_show');
         $.get(`./inst/num?i_id=${i_id}&p_id=${p_id}`, (res) => {
             res.forEach((val) => {
-                $('div#num').append(`<div class="general_list" onClick="enqueue(${i_id}, ${p_id}, ${val.i_num})">${val.i_num}</div>`);
+                $('div#num').append(`<div class="general_list" onClick="enqueue('${i_id}', '${p_id}', '${val.i_num}')">${val.i_num}</div>`);
             })
         })
     }
@@ -48,7 +48,7 @@
         $('div#piece_list').text('');
         $('div#num_container').removeClass('num_show');
         $('div#num').text('');
-        $('div#queue').append(`<div i_id=${i_id} p_id=${p_id} num=${num}>${title} ${name} ${num}</div>`);
+        $('div#queue').append(`<div i_id='${i_id}' p_id='${p_id}' num='${num}'>${title} ${name} ${num}</div>`);
     }
     function clear_queue(){
         $('div#queue').text('');
