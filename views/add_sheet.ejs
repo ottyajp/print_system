@@ -2,18 +2,37 @@
 <% include header %>
 <%= title %>
 <script type="text/javascript">
-function drop(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    const length = e.dataTransfer.items.length;
-    for(var i = 0; i < length; i++) {
-        const entry = e.dataTransfer.items[i].getAsFile();
-        $('div#datas').append(`<div>${entry.name}</div>`);
+    const instruments = <%- JSON.stringify(instruments) %>;
+    const pieces = <%- JSON.stringify(pieces) %>;
+    $(window).on('load', () => {
+        pieces.forEach((piece) => {
+            $('#pieces').append(`<option value="${piece.p_id}">${piece.title}</option>`);
+        })
+    });
+    function drop(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        const length = e.dataTransfer.items.length;
+        for(var i = 0; i < length; i++) {
+            const entry = e.dataTransfer.items[i].getAsFile();
+            const eleid = entry.name.split('.')[0];
+            const element = $(`<div id="p${eleid}" style="margin:5px;"><select id="${eleid}"></select>${entry.name}</div>`);
+            $('div#datas').append(element);
+            element.ready(() => {
+                instruments.forEach((inst) => {
+                    $(`select[id='${eleid}']`).append(`<option value="${inst.i_id}">${inst.i_name}</option>`);
+                });
+                $(`div#p${eleid}`).append(`<input type="text" id="num${eleid}">`);
+            });
+        }
     }
-}
 </script>
 <div id="droppable" droppable="true" ondrop="drop(event)" ondragenter="return false" ondragover="return false" style="border:gray solid 1em; padding: 2em;">drop here.</div>
 <HR />
+<div>
+    <select id="pieces"></select>
+</div>
+prefix:<input type="text" id="prefix">
 <div id="datas"></div>
 <div>追加</div>
 <% include footer %>
