@@ -15,7 +15,7 @@
             });
             res.forEach((val) => {
                 console.log(val);
-                $('div#piece_list').append(`<div class="general_list" onClick="askNum(${val.p_id},${i_id}, '${val.title}')">${val.title}</div>`);
+                $('div#piece_list').append(`<div class="general_list" id="piece${val.p_id}" piece_title="${val.title}" onClick="askNum(${val.p_id},${i_id}, '${val.title}')">${val.title}</div>`);
             });
         })
     }
@@ -42,11 +42,13 @@
     }
     
     function enqueue(i_id, p_id, num){
+        const name = $(`div#inst${i_id}`).attr('inst_name');
+        const title = $(`div#piece${p_id}`).attr('piece_title');
         $('div#piece_container').removeClass('piece_show');
         $('div#piece_list').text('');
         $('div#num_container').removeClass('num_show');
         $('div#num').text('');
-        $('div#queue').append(`<div i_id=${i_id} p_id=${p_id} num=${num}>${i_id} ${p_id} ${num}</div>`);
+        $('div#queue').append(`<div i_id=${i_id} p_id=${p_id} num=${num}>${title} ${name} ${num}</div>`);
     }
     
     function do_print(){
@@ -67,7 +69,7 @@
 </div>
 <div id="inst_list">
     <% instruments.forEach((inst) => { %>
-        <div class="general_list" onClick="seti_id(<%= inst.i_id %>, '<%= inst.i_name %>')"><%= inst.i_name %></div>
+        <div class="general_list" id="inst<%= inst.i_id %>" inst_name="<%= inst.i_name %>" onClick="seti_id(<%= inst.i_id %>, '<%= inst.i_name %>')"><%= inst.i_name %></div>
     <% }); %>
 </div>
 <div id="piece_container">
